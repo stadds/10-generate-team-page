@@ -4,13 +4,75 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-​
-const OUTPUT_DIR = path.resolve(__dirname, "output")
+
+const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
-​
+
 const render = require("./lib/htmlRenderer");
-​
-​
+
+const employeesArr = [];
+
+
+const startPrompt = {
+    type: "list",
+    name: "nextStep",
+    message: "What would you like to do?\nAdd an Employee:",
+    choices: [
+        {
+            name: "Add a Manager",
+            value: "Manager"
+        },
+        {
+            name: "Add an Engineer",
+            value: "Engineer"
+        },
+        {
+            name: "Add an Intern",
+            value: "Intern"
+        },
+        new inquirer.Separator(),
+        {
+            name: "Done - Make Team Page",
+            value: "Render"
+        }
+    ]
+}
+
+
+const engineerPrompt = {
+
+}
+
+const managerPrompt = {
+
+}
+
+const internPrompt = {
+    
+}
+
+
+async function getStartPrompt(){
+    try{
+
+        const answer = await inquirer.prompt(startPrompt);
+        console.log(answer);
+
+    } catch (err){
+        console.log(err);
+    }
+
+}
+
+function init(){
+    console.log("TESTING");
+    getStartPrompt();
+}
+
+init();
+
+
+/*
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 ​
@@ -33,3 +95,4 @@ const render = require("./lib/htmlRenderer");
 // for further information. Be sure to test out each class and verify it generates an 
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work!```
+*/
