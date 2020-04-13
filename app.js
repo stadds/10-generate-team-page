@@ -16,7 +16,7 @@ const employeesArr = [];
 const startPrompt = {
     type: "list",
     name: "nextStep",
-    message: "What would you like to do?\nAdd an Employee:",
+    message: "What would you like to do?\n\nAdd an Employee:",
     choices: [
         {
             name: "Add a Manager",
@@ -39,34 +39,105 @@ const startPrompt = {
 }
 
 
-const engineerPrompt = {
+const employeePrompt = [
 
+    {
+        type: "input",
+        name: "name",
+        message: "What is your employee's name?"
+    },
+    {
+        type: "input",
+        name: "id",
+        message: "What is your employee's id?",
+        validate: validateNum
+    },
+    {
+        type: "input",
+        name: "email",
+        message: "What is your employee's email?",
+        validate: validateEmail
+    }
+]
+
+const engineerPrompt = [
+    {
+        type: "input",
+        name: "github",
+        message: "Enter Engineer's github username"
+    }
+]
+
+// const managerPrompt = [
+//     {
+//         type: "input",
+//         name
+//     }
+// ]
+
+function validateNum(id) {
+    let reg = /^\d+$/;
+    return reg.test(id) || "id MUST be a number";
 }
 
-const managerPrompt = {
-
-}
-
-const internPrompt = {
-    
+function validateEmail(email) {
+    let emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+    return emailReg.test(email) || "Be enter a valid email";
 }
 
 
-async function getStartPrompt(){
-    try{
+async function getPrompts() {
+    try {
 
-        const answer = await inquirer.prompt(startPrompt);
-        console.log(answer);
+        let keepGoing = true;
 
-    } catch (err){
+        while (keepGoing === true) {
+
+            const answer = await inquirer.prompt(startPrompt);
+            console.log(answer);
+            // console.log(answer.nextStep);
+
+           // const employee = await inquirer.prompt(employeePrompt);
+            //console.log(answer)
+
+            //console.log(employee);
+
+            switch (answer.nextStep) {
+                case "Engineer":
+                    console.log("ENGINEER QS");
+                    await inquirer.prompt([...employeePrompt,...enginnerPrompt]).then(answers => {
+                        console.log(answers);
+                    })
+                    break;
+                case "Manager":
+                    console.log("MANAGER Qs");
+                    break;
+
+                case "Intern":
+                    console.log("INTERN Qs");
+                    break;
+
+                case "Render":
+                    keepGoing = false;
+                    break;
+            }
+        }
+
+        console.log("CREATE THE THING");
+
+
+
+
+    } catch (err) {
         console.log(err);
     }
 
 }
 
-function init(){
+function init() {
     console.log("TESTING");
-    getStartPrompt();
+    getPrompts();
+
 }
 
 init();
@@ -75,24 +146,24 @@ init();
 /*
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-​
+
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
-​
+
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
 // `output` folder. You can use the variable `outputPath` above target this location.
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
-​
+
 // HINT: each employee type (manager, engineer, or intern) has slightly different
 // information; write your code to ask different questions via inquirer depending on
 // employee type.
-​
+
 // HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
 // and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an 
+// for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work!```
 */
