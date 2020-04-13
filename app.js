@@ -118,6 +118,8 @@ async function getPrompts() {
                     console.log("ENGINEER QS");
                     await inquirer.prompt([...employeePrompt,...engineerPrompt]).then(answers => {
                         console.log(answers);
+                        let newEngineer = new Engineer(answers.name,answers.id,answers.email,answers.github);
+                        employeesArr.push(newEngineer);
                     })
                     break;
                 case "Manager":
@@ -141,6 +143,7 @@ async function getPrompts() {
         }
 
         console.log("CREATE THE THING");
+        console.log(employeesArr);
 
 
 
