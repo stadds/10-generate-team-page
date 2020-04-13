@@ -12,6 +12,16 @@ const render = require("./lib/htmlRenderer");
 
 const employeesArr = [];
 
+function validateNum(id) {
+    let reg = /^\d+$/;
+    return reg.test(id) || "id MUST be a number";
+}
+
+function validateEmail(email) {
+    let emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+    return emailReg.test(email) || "Be enter a valid email";
+}
+
 
 const startPrompt = {
     type: "list",
@@ -64,26 +74,27 @@ const engineerPrompt = [
     {
         type: "input",
         name: "github",
-        message: "Enter Engineer's github username"
+        message: "Enter Engineer's github username: "
     }
 ]
 
-// const managerPrompt = [
-//     {
-//         type: "input",
-//         name
-//     }
-// ]
+const managerPrompt = [
+    {
+        type: "input",
+        name: "officeNumber",
+        message: "Enter Manager's office number: ",
+        validate: validateNum
+    }
+]
 
-function validateNum(id) {
-    let reg = /^\d+$/;
-    return reg.test(id) || "id MUST be a number";
-}
+const internPrompt = [
+    {
+        type: "input",
+        name: "school",
+        message: "Enter your intern's school: "
+    }
+]
 
-function validateEmail(email) {
-    let emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
-    return emailReg.test(email) || "Be enter a valid email";
-}
 
 
 async function getPrompts() {
@@ -105,16 +116,22 @@ async function getPrompts() {
             switch (answer.nextStep) {
                 case "Engineer":
                     console.log("ENGINEER QS");
-                    await inquirer.prompt([...employeePrompt,...enginnerPrompt]).then(answers => {
+                    await inquirer.prompt([...employeePrompt,...engineerPrompt]).then(answers => {
                         console.log(answers);
                     })
                     break;
                 case "Manager":
                     console.log("MANAGER Qs");
+                    await inquirer.prompt([...employeePrompt,...managerPrompt]).then(answers => {
+                        console.log(answers);
+                    })
                     break;
 
                 case "Intern":
                     console.log("INTERN Qs");
+                    await inquirer.prompt([...employeePrompt,...internPrompt]).then(answers => {
+                        console.log(answers);
+                    })
                     break;
 
                 case "Render":
