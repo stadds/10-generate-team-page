@@ -22,11 +22,15 @@ function validateEmail(email) {
     return emailReg.test(email) || "Be enter a valid email";
 }
 
+function validateName(name){
+    let regex = /[A-z A-z]/;
+    return regex.test(name) || "Enter a valid name.";
+}
 
 const startPrompt = {
     type: "list",
     name: "nextStep",
-    message: "What would you like to do?\n\nAdd an Employee:",
+    message: "Add an Employee:",
     choices: [
         {
             name: "Add a Manager",
@@ -108,7 +112,7 @@ async function getPrompts() {
             console.log(answer);
             // console.log(answer.nextStep);
 
-           // const employee = await inquirer.prompt(employeePrompt);
+            // const employee = await inquirer.prompt(employeePrompt);
             //console.log(answer)
 
             //console.log(employee);
@@ -116,23 +120,28 @@ async function getPrompts() {
             switch (answer.nextStep) {
                 case "Engineer":
                     console.log("ENGINEER QS");
-                    await inquirer.prompt([...employeePrompt,...engineerPrompt]).then(answers => {
-                        console.log(answers);
-                        let newEngineer = new Engineer(answers.name,answers.id,answers.email,answers.github);
+                    await inquirer.prompt([...employeePrompt, ...engineerPrompt]).then(answers => {
+                        //console.log(answers);
+                        let newEngineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
                         employeesArr.push(newEngineer);
                     })
                     break;
                 case "Manager":
                     console.log("MANAGER Qs");
-                    await inquirer.prompt([...employeePrompt,...managerPrompt]).then(answers => {
-                        console.log(answers);
+                    await inquirer.prompt([...employeePrompt, ...managerPrompt]).then(answers => {
+                        // console.log(answers);
+                        let newManager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+                        employeesArr.push(newManager);
                     })
                     break;
 
                 case "Intern":
                     console.log("INTERN Qs");
-                    await inquirer.prompt([...employeePrompt,...internPrompt]).then(answers => {
-                        console.log(answers);
+                    await inquirer.prompt([...employeePrompt, ...internPrompt]).then(answers => {
+                        // console.log(answers);
+                        let newIntern = new Intern(answers.name, answers.id, answers.email, answers.school);
+                        employeesArr.push(newIntern);
+
                     })
                     break;
 
@@ -145,8 +154,8 @@ async function getPrompts() {
         console.log("CREATE THE THING");
         console.log(employeesArr);
 
-
-
+        const test = render(employeesArr);
+        console.log(test);
 
     } catch (err) {
         console.log(err);
@@ -157,6 +166,7 @@ async function getPrompts() {
 function init() {
     console.log("TESTING");
     getPrompts();
+    console.log("testing 2.0");
 
 }
 
