@@ -156,8 +156,10 @@ async function getPrompts() {
         console.log("CREATE THE THING");
         console.log(employeesArr);
 
-        const test = render(employeesArr);
-        console.log(test);
+        const data = render(employeesArr);
+        console.log(data);
+
+        fs.writeFileSync(outputPath,data);
 
     } catch (err) {
         console.log(err);
