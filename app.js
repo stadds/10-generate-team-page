@@ -14,7 +14,8 @@ const employeesArr = [];
 
 function validateNum(id) {
     let reg = /^\d+$/;
-    return reg.test(id) || "id MUST be a number";
+
+   return reg.test(id) || "id MUST be a number";
 }
 
 function validateEmail(email) {
@@ -23,7 +24,7 @@ function validateEmail(email) {
 }
 
 function validateName(name){
-    let regex = /[A-z A-z]/;
+    let regex = /^[A-Za-z\s]+$/;
     return regex.test(name) || "Enter a valid name.";
 }
 
@@ -58,7 +59,8 @@ const employeePrompt = [
     {
         type: "input",
         name: "name",
-        message: "What is your employee's name?"
+        message: "What is your employee's name?",
+        validate: validateName
     },
     {
         type: "input",
@@ -166,7 +168,7 @@ async function getPrompts() {
 function init() {
     console.log("TESTING");
     getPrompts();
-    console.log("testing 2.0");
+    //console.log("testing 2.0");
 
 }
 
