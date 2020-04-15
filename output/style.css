@@ -1,0 +1,20 @@
+.team-heading{
+    background-color: #e64a57;
+    color: white;
+}
+
+.team-area{
+
+}
+
+.employee-card{
+    background-color: aliceblue;
+    margin: .25em !important;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    border-radius: .25rem!important;
+}
+
+.employee-card .card-header{
+    background-color: #007bff;
+    color:white;
+}
