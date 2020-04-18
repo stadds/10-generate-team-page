@@ -1,3 +1,5 @@
+// Dependencies
+// =============================================================
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
@@ -10,8 +12,14 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+// Variables
+// =============================================================
+
+// Array to hold employees
 const employeesArr = [];
 
+// Inquirer validation
+// =============================================================
 function validateNum(id) {
     let reg = /^\d+$/;
 
@@ -28,6 +36,8 @@ function validateName(name){
     return regex.test(name) || "Enter a valid name.";
 }
 
+// Inquirer - Get Type of Employee to Add OR render everything
+// =============================================================
 const startPrompt = {
     type: "list",
     name: "nextStep",
@@ -53,7 +63,8 @@ const startPrompt = {
     ]
 }
 
-
+// Inquirer - Common Employee Questions
+// =============================================================
 const employeePrompt = [
 
     {
@@ -76,6 +87,8 @@ const employeePrompt = [
     }
 ]
 
+// Inquirer - Specific Employee Questions
+// =============================================================
 const engineerPrompt = [
     {
         type: "input",
@@ -102,16 +115,18 @@ const internPrompt = [
 ]
 
 
-
+// Get Input, then render HTML file
+// =============================================================
 async function getPrompts() {
     try {
 
         let keepGoing = true;
 
+        //keep gathering input
         while (keepGoing === true) {
 
             const answer = await inquirer.prompt(startPrompt);
-            console.log(answer);
+            //console.log(answer);
             // console.log(answer.nextStep);
 
             //console.log(employee);
@@ -145,17 +160,19 @@ async function getPrompts() {
                     break;
 
                 case "Render":
-                    keepGoing = false;
+                    keepGoing = false; //stop gathering input
                     break;
             }
         }
 
-        console.log("CREATE THE THING");
-        console.log(employeesArr);
+        //console.log("CREATE THE THING");
+        //console.log(employeesArr);
 
+        //create the HTML 
         const data = render(employeesArr);
-        console.log(data);
+        //console.log(data);
 
+        //write HTML to a file
         fs.writeFileSync(outputPath,data);
 
     } catch (err) {
@@ -165,7 +182,7 @@ async function getPrompts() {
 }
 
 function init() {
-    console.log("TESTING");
+   // console.log("TESTING");
     getPrompts();
 }
 
